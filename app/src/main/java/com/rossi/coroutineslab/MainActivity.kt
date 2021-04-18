@@ -14,15 +14,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val url = URL("https://www.stickaz.com/6235-7166-large/bugdroid-android.png")
+        Thread(Runnable {
+            val url = URL("https://www.stickaz.com/6235-7166-large/bugdroid-android.png")
 
-        val urlConnection = url.openConnection() as HttpURLConnection
-        urlConnection.doInput = true
-        urlConnection.connect()
+            val urlConnection = url.openConnection() as HttpURLConnection
+            urlConnection.doInput = true
+            urlConnection.connect()
 
-        val inputStream = urlConnection.inputStream
-        val bitMap = BitmapFactory.decodeStream(inputStream)
-        image.setImageBitmap(bitMap)
-
+            val inputStream = urlConnection.inputStream
+            val bitMap = BitmapFactory.decodeStream(inputStream)
+            image.setImageBitmap(bitMap)
+        }).start()
     }
 }
