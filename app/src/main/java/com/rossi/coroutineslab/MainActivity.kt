@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -14,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        Thread(Runnable {
+        GlobalScope.launch {
             val url = URL("https://www.stickaz.com/6235-7166-large/bugdroid-android.png")
 
             val urlConnection = url.openConnection() as HttpURLConnection
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                     *OU*/
             Handler(mainLooper).post{ image.setImageBitmap(bitMap) }
 
-        }).start()
+        }
 
     }
 }
