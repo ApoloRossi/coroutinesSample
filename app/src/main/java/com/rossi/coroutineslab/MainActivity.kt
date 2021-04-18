@@ -1,9 +1,9 @@
 package com.rossi.coroutineslab
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.HttpURLConnection
 import java.net.URL
@@ -23,7 +23,13 @@ class MainActivity : AppCompatActivity() {
 
             val inputStream = urlConnection.inputStream
             val bitMap = BitmapFactory.decodeStream(inputStream)
-            image.setImageBitmap(bitMap)
+
+            /* Para retornar para a MainThread pode ser usado uma das 2 abordagens:
+            *runOnUiThread { image.setImageBitmap(bitMap) }
+                    *OU*/
+            Handler(mainLooper).post{ image.setImageBitmap(bitMap) }
+
         }).start()
+
     }
 }
