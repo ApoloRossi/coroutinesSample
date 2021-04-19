@@ -3,6 +3,7 @@ package com.rossi.coroutineslab
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
@@ -15,10 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        Log.d("TaskThread", Thread.currentThread().name)
         GlobalScope.launch {
-            val url = URL("https://www.stickaz.com/6235-7166-large/bugdroid-android.png")
+            Log.d("TaskThread", Thread.currentThread().name)
 
+            val url = URL("https://www.stickaz.com/6235-7166-large/bugdroid-android.png")
             val urlConnection = url.openConnection() as HttpURLConnection
             urlConnection.doInput = true
             urlConnection.connect()
@@ -29,7 +31,10 @@ class MainActivity : AppCompatActivity() {
             /* Para retornar para a MainThread pode ser usado uma das 2 abordagens:
             *runOnUiThread { image.setImageBitmap(bitMap) }
                     *OU*/
-            Handler(mainLooper).post{ image.setImageBitmap(bitMap) }
+            Handler(mainLooper).post{
+                Log.d("TaskThread", Thread.currentThread().name)
+                image.setImageBitmap(bitMap)
+            }
 
         }
 
