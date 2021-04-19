@@ -6,6 +6,7 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
@@ -31,12 +32,14 @@ class MainActivity : AppCompatActivity() {
             /* Para retornar para a MainThread pode ser usado uma das 2 abordagens:
             *runOnUiThread { image.setImageBitmap(bitMap) }
                     *OU*/
-            Handler(mainLooper).post{
+            /*Handler(mainLooper).post{
+                Log.d("TaskThread", Thread.currentThread().name)
+                image.setImageBitmap(bitMap)
+            }*/
+            launch(Dispatchers.Main) {
                 Log.d("TaskThread", Thread.currentThread().name)
                 image.setImageBitmap(bitMap)
             }
-
         }
-
     }
 }
